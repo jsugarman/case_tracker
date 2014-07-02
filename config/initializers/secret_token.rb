@@ -9,4 +9,19 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-CaseTracker::Application.config.secret_key_base = 'e78533ce7b82b597e3b64ebaea5de1e2ab72175561dc2fac23a04ebfa6844c4431c25498fb67446466993de30a0c90e4ee9729c57aaf4cdc831b8e00a73aa0f7'
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+CaseTracker::Application.config.secret_key_base = secure_token
