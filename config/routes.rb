@@ -54,7 +54,7 @@ CaseTracker::Application.routes.draw do
   #     resources :products
   #   end
 
-root 'welcome#index'
+root 'static_pages#home'
 # root 'layout/application'
 
 end
