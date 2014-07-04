@@ -1,2 +1,8 @@
-<h1>StaticPages#contacts</h1>
-<p>Find me in app/views/static_pages/contacts.html.erb</p>
+<% provide(:title, 'Contacts') %>
+
+<div class="center hero-unit">
+	<h1><%= yield(:title) %></h1>
+	<p> 
+		contacts here
+	</p>
+</div>

@@ -1,79 +1,53 @@
-# require 'spec_helper'
-
-# describe "Static Pages" do
-
-#   # subject {page}
-
-#   describe "Home Page" do
-  
-#     # visit root_path
-#     before { visit root_path }
-#     it { should have_title('Home') }
-#     expect(page).to have_title(full_title('Home'))
-#     # it { should_not have_title('Home') }
-#   end
-
-
-# # describe "Home page" do
-# #     before { visit root_path }
-# #     let(:heading)    { 'Sample App' }
-# #     let(:page_title) { '' }
-# #     it_should_behave_like "all static pages"    
-# #     it { should_not have_title('Home') }
-# #   end
-
-#   describe "About Page" do
-
-#     before { visit about_path}
-#     # expect(page).to have_title(full_title('Home'))
-
-#   end
-
-# end
-
-
-# ----------------------
 require 'spec_helper'
 
 describe "Static Pages" do
 
   let(:base_title) { "Case Tracker" }
+  let(:search_link_text) {"Search Cases Now"}
 
   subject {page}
 
   shared_examples_for "all static pages" do
-    it { should have_selector('h1', text: heading) }
-    it { should have_title(full_title(page_title)) }
+    specify { expect(page).to have_selector('h1', text: heading) }
+    specify { expect(page).to have_title(page_title)}
+    specify { expect(page).to have_selector(:link_or_button, text: search_link_text) }
+    specify { expect(page).to have_content('Copyright') }
   end
 
   describe "Home page" do
     before { visit root_path }
     let(:heading)    { 'Case Tracker' }
     let(:page_title) { 'Home' }
-    it_should_behave_like "all static pages"    
-    it { should have_title('Home') }
+    it_should_behave_like "all static pages"
   end
 
-  # describe "Help page" do
-  #   before { visit help_path }
-  #   let(:heading)    { 'Help' }
-  #   let(:page_title) { 'Help' }
-  #   it_should_behave_like "all static pages"
-  # end
+  describe "Help page" do
+    before { visit help_path }
+    let(:heading)    { 'Help' }
+    let(:page_title) { 'Help' }
+    it_should_behave_like "all static pages"
+  end
 
-  # describe "About page" do
-  #   before { visit about_path }
-  #   let(:heading)    { 'About' }
-  #   let(:page_title) { 'About Us' }
-  #   it_should_behave_like "all static pages"
-  # end
+  describe "About page" do
+    before { visit about_path }
+    let(:heading)    { 'About' }
+    let(:page_title) { 'About Us' }
+    it_should_behave_like "all static pages"
+  end
 
-  # describe "Contacts page" do
-  #   before {visit contacts_path}
-  #   let(:heading)    { 'Contacts' }
-  #   let(:page_title) { 'Contacts' }
-  #   it_should_behave_like "all static pages"
-  # end
+  describe "Contacts page" do
+    before {visit contacts_path}
+    let(:heading)    { 'Contacts' }
+    let(:page_title) { 'Contacts' }
+    it_should_behave_like "all static pages"
+  end
+
+  describe "Admin page" do
+    before {visit admin_path}
+    let(:heading)    { 'Administration' }
+    let(:page_title) { 'Administration' }
+    it_should_behave_like "all static pages"
+  end
 
   # it "should have the right links on the layout" do
   #   visit root_path
@@ -89,7 +63,7 @@ describe "Static Pages" do
   #   click_link "Home"
   #   expect(page).to have_title(full_title(''))
 
-  #   click_link "Sign up now!"
+  #   click_link "Search Cases Now!"
   #   expect(page).to have_title(full_title('Sign up'))
     
   #   click_link "sample app"
