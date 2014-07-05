@@ -16,8 +16,8 @@ describe "Static Pages" do
 
   describe "Home page" do
     before { visit root_path }
-    let(:heading)    { 'Case Tracker' }
-    let(:page_title) { 'Home' }
+    let(:heading)    { 'Welcome to the Case Tracker' }
+    let(:page_title) { '' }
     it_should_behave_like "all static pages"
   end
 

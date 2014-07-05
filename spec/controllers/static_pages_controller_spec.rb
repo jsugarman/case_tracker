@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+
+# old style but left in for now. jsugarman 
 describe StaticPagesController do
 
   describe "GET 'search'" do
