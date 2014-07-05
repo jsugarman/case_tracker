@@ -28,7 +28,7 @@ module CaseTracker
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # config adde by jsugarman to make rails 4 compatible with bootstrap
+    # config added by jsugarman to make rails 4 compatible with bootstrap
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
   end
 end
