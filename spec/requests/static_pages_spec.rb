@@ -21,6 +21,13 @@ describe "Static Pages" do
     it_should_behave_like "all static pages"
   end
 
+  describe "Search page" do
+    before {visit search_path}
+    let(:heading)    { 'Search' }
+    let(:page_title) { 'Search' }
+    it_should_behave_like "all static pages"
+  end
+
   describe "Help page" do
     before { visit help_path }
     let(:heading)    { 'Help' }
