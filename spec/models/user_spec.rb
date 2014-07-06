@@ -2,13 +2,16 @@ require 'spec_helper'
 
 describe User do
 
-	before { @user = User.new(name: "Example User", email: "user@example.com") }
+	before { @user = User.new(name: "Example User", email: "user@example.com",
+	 password:"foobar", password_confirmation: "foobar") }
 	subject { @user }
 
   	describe "a valid user" do
 		specify { expect(subject).to respond_to(:name) }
 		specify { expect(subject).to respond_to(:email) }
 		specify { expect(subject).to respond_to(:password_digest) }
+		specify { expect(subject).to respond_to(:password) }
+		specify { expect(subject).to respond_to(:password_confirmation) }
 		specify { expect(subject).to be_valid }
 	end
 
@@ -16,7 +19,6 @@ describe User do
 		
 		context "with no name" do
 			before { @user.name = '' }
-			# it { should_not be_valid }
 			specify { expect(subject).to_not be_valid }
 		end
 
@@ -49,6 +51,16 @@ describe User do
 			specify { expect(subject).to_not be_valid }
 		end
 
+		context "with no password digest" do
+			before { @user.password_digest = "" }
+			specify { expect(subject).to_not be_valid }
+		end
+
+		context "with mismatched password and confirmation" do
+			before { @user.password_confirmation = "not_foobar" }
+			specify { expect(subject).to_not be_valid }
+		end
+
 
 		pending "create more robust invalid mail format test using factories??!"
 
@@ -57,10 +69,21 @@ describe User do
 
 	end
 
+	describe "password authentication" do
+		before { @user.save }
+		let(:valid_user) {User.find_by(email: @user.email)}
 
-	pending "should have a login password"
+		context "with valid password" do
+			specify { expect(valid_user.authenticate(@user.password)).to be_true }	
+		end
 
+		context "with invalid password" do
+			specify { expect(valid_user.authenticate('invalid')).to be_false }	
+		end
 	
+	end
+
+	pending "should have to login to get ot the admin page"	
 	pending "should not be able to create a new user"
 	pending "should be able to view other admins, if you are an admin"
 
