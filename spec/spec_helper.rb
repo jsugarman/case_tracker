@@ -43,4 +43,8 @@ RSpec.configure do |config|
   #included by jsugarman
   config.include Capybara::DSL
 
+  # included by jsugarman due to latest expectations and standards
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
 end
