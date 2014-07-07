@@ -15,4 +15,6 @@ class User < ActiveRecord::Base
 
 	validates(:password_digest, presence: true)
 
+	validates(:password, length: { minimum: 8} )
+
 end

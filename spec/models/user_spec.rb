@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
 
 	before { @user = User.new(name: "Example User", email: "user@example.com",
-	 password:"foobar", password_confirmation: "foobar") }
+	 password:"foobarish", password_confirmation: "foobarish") }
 	subject { @user }
 
   	describe "a valid user" do
@@ -41,7 +41,9 @@ describe User do
 			before { @user.email = 'invalidemailaddress.com' }
 			specify { expect(subject).to_not be_valid }
 		end
-
+		
+		pending "create more robust invalid mail format test using factories??!"
+		
 		context "with duplicate email" do
 			before do
 				user_with_same_email = @user.dup
@@ -61,15 +63,20 @@ describe User do
 			specify { expect(subject).to_not be_valid }
 		end
 
+		context "with too short a password" do
+			before { @user.password = @user.password_confirmation = 'a'*7 }
+			specify { expect(subject).to_not be_valid }
+		end
 
-		pending "create more robust invalid mail format test using factories??!"
+		pending "with password with one or more numbers or symbols"
+		
 
 	# pending "should have email confirmation virtua field when creating???not creating though"
 
 
 	end
 
-	describe "password authentication" do
+	describe "login password authentication" do
 		before { @user.save }
 		let(:valid_user) {User.find_by(email: @user.email)}
 
@@ -80,7 +87,7 @@ describe User do
 		context "with invalid password" do
 			specify { expect(valid_user.authenticate('invalid')).to be_false }	
 		end
-	
+
 	end
 
 	pending "should have to login to get ot the admin page"	
